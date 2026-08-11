@@ -1,0 +1,850 @@
+:root {
+  --dark: #080817;
+  --dark-purple: #11102b;
+  --purple: #322467;
+  --purple-light: #6245c5;
+
+  --blue: #34c9ff;
+  --cyan: #82efff;
+
+  --yellow: #ffd23f;
+  --orange: #ff8c32;
+
+  --pink: #ef4ba1;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  overflow-x: hidden;
+}
+
+button {
+  font-family: inherit;
+}
+
+/* =========================
+   TELA
+========================= */
+
+.game {
+  min-height: 100vh;
+
+  background: var(--dark);
+
+  color: white;
+
+  font-family: "Courier New", Courier, monospace;
+}
+
+/* =========================
+   HUD
+========================= */
+
+.hud {
+  height: 82px;
+
+  padding: 0 45px;
+
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  background: #080815;
+
+  border-bottom: 4px solid #4a348e;
+
+  position: relative;
+  z-index: 100;
+}
+
+.brand {
+  display: flex;
+  flex-direction: column;
+}
+
+.brand-main {
+  color: var(--cyan);
+
+  font-weight: 900;
+  font-size: 23px;
+
+  letter-spacing: 3px;
+}
+
+.brand-sub {
+  color: #71759c;
+
+  font-size: 10px;
+
+  margin-top: 4px;
+
+  letter-spacing: 2px;
+}
+
+.hud-stats {
+  display: flex;
+
+  gap: 35px;
+
+  color: var(--yellow);
+
+  font-size: 18px;
+  font-weight: bold;
+}
+
+.menu-button {
+  color: white;
+
+  background: #181636;
+
+  border: 3px solid var(--purple-light);
+
+  padding: 10px 20px;
+
+  font-weight: bold;
+
+  cursor: pointer;
+
+  box-shadow: 4px 4px 0 #000;
+}
+
+.menu-button:hover {
+  background: var(--purple);
+}
+
+/* =========================
+   MUNDO
+========================= */
+
+.world {
+  height: calc(100vh - 145px);
+  min-height: 650px;
+
+  position: relative;
+
+  overflow: hidden;
+
+  background:
+    linear-gradient(
+      to bottom,
+      #09091b 0%,
+      #111034 45%,
+      #1c1645 78%,
+      #28205a 100%
+    );
+}
+
+/* =========================
+   ESTRELAS
+========================= */
+
+.star {
+  position: absolute;
+
+  color: white;
+
+  font-size: 19px;
+
+  text-shadow:
+    0 0 10px white,
+    0 0 18px #4fcaff;
+}
+
+.star1 {
+  top: 12%;
+  left: 8%;
+}
+
+.star2 {
+  top: 25%;
+  left: 18%;
+}
+
+.star3 {
+  top: 15%;
+  left: 67%;
+}
+
+.star4 {
+  top: 35%;
+  left: 77%;
+}
+
+.star5 {
+  top: 12%;
+  right: 10%;
+}
+
+.star6 {
+  top: 45%;
+  left: 5%;
+}
+
+.star7 {
+  top: 52%;
+  right: 6%;
+}
+
+/* =========================
+   LUA
+========================= */
+
+.moon {
+  width: 110px;
+  height: 110px;
+
+  position: absolute;
+
+  right: 9%;
+  top: 12%;
+
+  border-radius: 50%;
+
+  background: #fff1a0;
+
+  box-shadow:
+    0 0 20px rgba(255, 241, 160, 0.6),
+    0 0 60px rgba(255, 241, 160, 0.25);
+}
+
+.moon-hole {
+  position: absolute;
+
+  border-radius: 50%;
+
+  background: rgba(202, 178, 97, 0.35);
+}
+
+.hole1 {
+  width: 20px;
+  height: 20px;
+
+  left: 25px;
+  top: 20px;
+}
+
+.hole2 {
+  width: 14px;
+  height: 14px;
+
+  right: 20px;
+  top: 45px;
+}
+
+.hole3 {
+  width: 24px;
+  height: 24px;
+
+  left: 43px;
+  bottom: 18px;
+}
+
+/* =========================
+   NUVENS
+========================= */
+
+.cloud {
+  position: absolute;
+
+  height: 40px;
+
+  opacity: 0.35;
+}
+
+.cloud span {
+  display: block;
+
+  position: absolute;
+
+  background: #b3aaff;
+}
+
+.cloud span:nth-child(1) {
+  width: 90px;
+  height: 22px;
+
+  bottom: 0;
+}
+
+.cloud span:nth-child(2) {
+  width: 43px;
+  height: 35px;
+
+  left: 18px;
+  bottom: 0;
+}
+
+.cloud span:nth-child(3) {
+  width: 45px;
+  height: 29px;
+
+  left: 52px;
+  bottom: 0;
+}
+
+.cloud-left {
+  left: 8%;
+  top: 22%;
+}
+
+.cloud-right {
+  right: 24%;
+  top: 29%;
+}
+
+/* =========================
+   INTRO
+========================= */
+
+.intro {
+  position: absolute;
+
+  top: 12%;
+  left: 50%;
+
+  transform: translateX(-50%);
+
+  width: 650px;
+
+  text-align: center;
+
+  z-index: 20;
+}
+
+.level {
+  color: var(--yellow);
+
+  font-size: 14px;
+
+  letter-spacing: 5px;
+}
+
+.intro h1 {
+  margin: 8px 0 12px;
+
+  font-size: clamp(36px, 4.5vw, 68px);
+
+  line-height: 1.05;
+
+  text-transform: uppercase;
+
+  text-shadow:
+    4px 0 #392d78,
+    -4px 0 #392d78,
+    0 4px #392d78,
+    0 -4px #392d78,
+    7px 7px #080815;
+}
+
+.intro p:last-child {
+  color: #b4b1d9;
+
+  font-size: 14px;
+}
+
+/* =========================
+   CAIXAS
+========================= */
+
+.question-box {
+  width: 165px;
+  height: 100px;
+
+  position: absolute;
+
+  z-index: 30;
+
+  display: flex;
+  flex-direction: column;
+
+  align-items: center;
+  justify-content: center;
+
+  gap: 6px;
+
+  background:
+    linear-gradient(
+      135deg,
+      #ffcc34 0 12%,
+      #d67b21 12% 20%,
+      #f5a82a 20% 80%,
+      #c76b17 80%
+    );
+
+  border:
+    5px solid #ffd95a;
+
+  outline:
+    4px solid #713916;
+
+  box-shadow:
+    inset -8px -8px 0 #b96016,
+    inset 8px 8px 0 #ffe477,
+    8px 8px 0 rgba(0, 0, 0, 0.45);
+
+  color: #3c1a10;
+
+  font-weight: 900;
+
+  cursor: pointer;
+
+  transition: transform 0.12s;
+}
+
+.question-box:hover {
+  transform: translateY(-5px);
+}
+
+.box-symbol {
+  font-size: 28px;
+  font-weight: 900;
+}
+
+.question-box span {
+  font-size: 12px;
+}
+
+.box-about {
+  left: 10%;
+  top: 40%;
+}
+
+.box-projects {
+  left: 30%;
+  top: 50%;
+}
+
+.box-experience {
+  right: 29%;
+  top: 40%;
+}
+
+.box-contact {
+  right: 9%;
+  top: 50%;
+}
+
+/* =========================
+   PLATAFORMAS
+========================= */
+
+.platform {
+  height: 28px;
+
+  position: absolute;
+
+  z-index: 15;
+
+  background:
+    repeating-linear-gradient(
+      90deg,
+      #56409b 0 22px,
+      #7357c0 22px 44px
+    );
+
+  border-top: 5px solid #a18ef0;
+
+  border-bottom: 5px solid #251c4e;
+
+  box-shadow: 6px 6px 0 rgba(0, 0, 0, 0.4);
+}
+
+.platform-left {
+  width: 200px;
+
+  left: 8%;
+  top: 67%;
+}
+
+.platform-center {
+  width: 280px;
+
+  left: 40%;
+  top: 62%;
+}
+
+.platform-right {
+  width: 190px;
+
+  right: 7%;
+  top: 70%;
+}
+
+/* =========================
+   MOEDAS
+========================= */
+
+.coin {
+  position: absolute;
+
+  z-index: 25;
+
+  width: 20px;
+  height: 28px;
+
+  background: var(--yellow);
+
+  border: 4px solid #b96815;
+
+  box-shadow:
+    inset 4px 0 #fff6a1,
+    inset -4px 0 #e6891b;
+
+  border-radius: 40%;
+}
+
+.coin1 {
+  left: 19%;
+  top: 61%;
+}
+
+.coin2 {
+  left: 52%;
+  top: 53%;
+}
+
+.coin3 {
+  right: 18%;
+  top: 64%;
+}
+
+/* =========================
+   PERSONAGEM
+========================= */
+
+.player {
+  width: 54px;
+  height: 95px;
+
+  position: absolute;
+
+  z-index: 60;
+
+  left: 46%;
+  bottom: 120px;
+}
+
+.hair {
+  width: 42px;
+  height: 17px;
+
+  position: absolute;
+
+  left: 6px;
+  top: 0;
+
+  background: #1d1722;
+
+  border: 4px solid #080815;
+
+  box-shadow:
+    9px -5px 0 #1d1722,
+    18px 1px 0 #1d1722;
+}
+
+.face {
+  width: 38px;
+  height: 30px;
+
+  position: absolute;
+
+  left: 9px;
+  top: 15px;
+
+  background: #eeb785;
+
+  border: 4px solid #080815;
+
+  box-shadow: inset -5px -4px #bd7957;
+}
+
+.body {
+  width: 48px;
+  height: 40px;
+
+  position: absolute;
+
+  left: 3px;
+  top: 45px;
+
+  background: var(--cyan);
+
+  border: 4px solid #080815;
+
+  box-shadow: inset -7px -5px #2788bd;
+}
+
+.shirt-detail {
+  width: 18px;
+  height: 8px;
+
+  position: absolute;
+
+  top: 8px;
+  left: 12px;
+
+  background: #102d59;
+}
+
+.leg {
+  width: 19px;
+  height: 20px;
+
+  position: absolute;
+
+  bottom: -7px;
+
+  background: #202146;
+
+  border: 4px solid #080815;
+}
+
+.leg-left {
+  left: 4px;
+}
+
+.leg-right {
+  right: 4px;
+}
+
+/* =========================
+   CIDADE
+========================= */
+
+.city {
+  position: absolute;
+
+  bottom: 75px;
+  left: 0;
+
+  width: 100%;
+  height: 220px;
+
+  z-index: 3;
+
+  opacity: 0.5;
+
+  display: flex;
+
+  align-items: flex-end;
+
+  gap: 15px;
+
+  padding: 0 15px;
+}
+
+.building {
+  flex: 1;
+
+  min-width: 70px;
+
+  background:
+    repeating-linear-gradient(
+      90deg,
+      transparent 0 15px,
+      rgba(255, 214, 74, 0.26) 15px 20px
+    ),
+    repeating-linear-gradient(
+      0deg,
+      #15143a 0 20px,
+      #211b51 20px 24px
+    );
+
+  border-top: 4px solid #35296d;
+}
+
+.b1 {
+  height: 90px;
+}
+
+.b2 {
+  height: 160px;
+}
+
+.b3 {
+  height: 120px;
+}
+
+.b4 {
+  height: 190px;
+}
+
+.b5 {
+  height: 135px;
+}
+
+.b6 {
+  height: 210px;
+}
+
+.b7 {
+  height: 150px;
+}
+
+.b8 {
+  height: 105px;
+}
+
+/* =========================
+   CHÃO
+========================= */
+
+.ground {
+  width: 100%;
+  height: 80px;
+
+  position: absolute;
+
+  bottom: 0;
+
+  z-index: 50;
+}
+
+.grass {
+  height: 22px;
+
+  background:
+    repeating-linear-gradient(
+      90deg,
+      #2de391 0 28px,
+      #21bd75 28px 55px
+    );
+
+  border-top: 5px solid #89f7b5;
+}
+
+.dirt {
+  height: 58px;
+
+  background:
+    repeating-linear-gradient(
+      45deg,
+      #342465 0 14px,
+      #402d78 14px 28px
+    );
+
+  border-top: 5px solid #181239;
+}
+
+/* =========================
+   CONTROLES
+========================= */
+
+.controls {
+  min-height: 63px;
+
+  display: flex;
+
+  align-items: center;
+  justify-content: center;
+
+  gap: 60px;
+
+  background: #080815;
+
+  border-top: 3px solid #4a348e;
+
+  color: #b3b0ce;
+
+  font-size: 11px;
+
+  letter-spacing: 1px;
+}
+
+.controls > div {
+  display: flex;
+
+  align-items: center;
+
+  gap: 8px;
+}
+
+kbd {
+  padding: 6px 9px;
+
+  border: 2px solid #7062ab;
+
+  background: #17152d;
+
+  color: white;
+
+  box-shadow: 3px 3px 0 black;
+}
+
+.controls-tip {
+  color: var(--yellow);
+}
+
+/* =========================
+   RESPONSIVO
+========================= */
+
+@media (max-width: 900px) {
+  .hud-stats {
+    display: none;
+  }
+
+  .world {
+    min-height: 730px;
+  }
+
+  .intro {
+    width: 90%;
+
+    top: 8%;
+  }
+
+  .question-box {
+    width: 135px;
+    height: 85px;
+  }
+
+  .box-about {
+    left: 8%;
+    top: 37%;
+  }
+
+  .box-projects {
+    left: auto;
+    right: 8%;
+    top: 37%;
+  }
+
+  .box-experience {
+    left: 8%;
+    right: auto;
+    top: 56%;
+  }
+
+  .box-contact {
+    right: 8%;
+    top: 56%;
+  }
+
+  .platform-left,
+  .platform-center,
+  .platform-right {
+    display: none;
+  }
+
+  .player {
+    left: 46%;
+    bottom: 110px;
+  }
+
+  .controls {
+    gap: 20px;
+
+    flex-wrap: wrap;
+
+    padding: 12px;
+  }
+
+  .controls-tip {
+    display: none;
+  }
+}
