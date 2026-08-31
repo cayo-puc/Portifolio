@@ -11,7 +11,7 @@ const BOX_TOP = 120;
 const MOVE_SPEED = 320;
 const JUMP_SPEED = 950;
 const GRAVITY = 1650;
-const UI_UPDATE_INTERVAL = 1000 / 30;
+const UI_UPDATE_INTERVAL = 1000 / 60;
 
 const spriteSources = [
   "/images/caracter/standing.png",

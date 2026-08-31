@@ -4,20 +4,23 @@ import GameCharacter from "./GameCharacter";
 import { usePortfolioMode } from "./PortfolioMode";
 
 const INTERACTION_DISTANCE = 195;
+const RETURN_INTERACTION_DISTANCE = 280;
 const ATTACK_REACH = 180;
 const ENEMY_RUN_DISTANCE = 23;
 const PROJECTILE_SPEED = 30;
 const ATTACK_CHARGE_DURATION = 1050;
-const UI_UPDATE_INTERVAL = 1000 / 30;
+const UI_UPDATE_INTERVAL = 1000 / 60;
 const initialPlayerPosition = { center: 96, depth: 0, width: 0 };
 
 const createEnemies = (spawns) => spawns.map((enemy, index) => ({ ...enemy, id: `rat-${index}`, hits: 0, lastShot: 0 }));
 
 function GameLevel({ backgroundClass, documentPosition, returnPosition, onDocumentInteract, document, overlay, enemySpawns = [], levelId }) {
   const navigate = useNavigate();
-  const { mode, collectDocument, endGame, enemyProgress, saveEnemyProgress } = usePortfolioMode();
+  const { mode, collectDocument, endGame, foundDocuments } = usePortfolioMode();
   const siteMode = mode === "site";
-  const initialEnemies = enemyProgress[levelId] ?? createEnemies(enemySpawns);
+  // Um level concluído não recria inimigos; levels ainda não concluídos começam
+  // limpos em cada visita para evitar preservar estados de animação obsoletos.
+  const initialEnemies = foundDocuments.includes(levelId) ? [] : createEnemies(enemySpawns);
   const levelRef = useRef(null);
   const playerRef = useRef(initialPlayerPosition);
   const livesRef = useRef(3);
@@ -36,7 +39,7 @@ function GameLevel({ backgroundClass, documentPosition, returnPosition, onDocume
   const documentDistance = Math.abs(playerPosition.center - (playerPosition.width * documentPosition.left) / 100);
   const returnDistance = Math.abs(playerPosition.center - (playerPosition.width * returnPosition.left) / 100);
   const canRead = enemiesDefeated && documentDistance <= INTERACTION_DISTANCE && Math.abs(playerPosition.depth - documentPosition.depth) <= 90;
-  const canReturn = returnDistance <= INTERACTION_DISTANCE && Math.abs(playerPosition.depth - returnPosition.depth) <= 90;
+  const canReturn = returnDistance <= RETURN_INTERACTION_DISTANCE && Math.abs(playerPosition.depth - returnPosition.depth) <= 125;
 
   useEffect(() => {
     if (siteMode || lives === 0) return undefined;
@@ -137,10 +140,6 @@ function GameLevel({ backgroundClass, documentPosition, returnPosition, onDocume
     });
   }, []);
 
-  useEffect(() => () => {
-    if (!siteMode && levelId) saveEnemyProgress(levelId, enemiesRef.current);
-  }, [levelId, saveEnemyProgress, siteMode]);
-
   const updatePlayerPosition = (position) => {
     playerRef.current = position;
     setPlayerPosition(position);
@@ -148,12 +147,13 @@ function GameLevel({ backgroundClass, documentPosition, returnPosition, onDocume
 
   const interact = (position) => {
     const documentIsNear = enemiesDefeated && Math.abs(position.center - (position.width * documentPosition.left) / 100) <= INTERACTION_DISTANCE && Math.abs(position.depth - documentPosition.depth) <= 90;
-    const returnIsNear = Math.abs(position.center - (position.width * returnPosition.left) / 100) <= INTERACTION_DISTANCE && Math.abs(position.depth - returnPosition.depth) <= 90;
-    if (documentIsNear) {
+    const returnIsNear = Math.abs(position.center - (position.width * returnPosition.left) / 100) <= RETURN_INTERACTION_DISTANCE && Math.abs(position.depth - returnPosition.depth) <= 125;
+    if (returnIsNear || position.blockedObstacleId === "return") {
+      navigate("/");
+    } else if (documentIsNear) {
       collectDocument(levelId);
       onDocumentInteract();
     }
-    else if (returnIsNear || position.blockedObstacleId === "return") navigate("/");
   };
 
   const attackEnemy = (position) => {
@@ -184,7 +184,7 @@ function GameLevel({ backgroundClass, documentPosition, returnPosition, onDocume
           {!siteMode && !enemiesDefeated && <span className="scene-prompt scene-prompt--locked">DOCUMENTO BLOQUEADO</span>}
         </div>
 
-        <div className="return-gate" aria-label="Passagem de volta" style={{ left: `${returnPosition.left}%`, bottom: `calc(9% + ${returnPosition.depth}px)`, zIndex: 20 - Math.round(returnPosition.depth / 20), transform: `translateX(-50%) scale(${1 + -returnPosition.depth / 1200})` }} onClick={() => navigate("/")}>
+        <div className="return-gate" aria-label="Passagem de volta" style={{ left: `${returnPosition.left}%`, bottom: `calc(9% + ${returnPosition.depth}px)`, zIndex: 20 - Math.round(returnPosition.depth / 20), transform: `translateX(-50%) scale(${1 + -returnPosition.depth / 1200})` }} onClick={siteMode ? () => navigate("/") : undefined}>
           <img src="/images/objects/box-broken.png" alt="Passagem de volta para a Home" />
           {(siteMode || canReturn) && <span className="scene-prompt">{siteMode ? "CLIQUE PARA HOME" : "[ E ] VOLTAR À HOME"}</span>}
         </div>

@@ -13,7 +13,7 @@ const boxes = [
 
 function Home() {
   const navigate = useNavigate();
-  const { mode, destroyedBoxes, setDestroyedBoxes } = usePortfolioMode();
+  const { mode, destroyedBoxes, destroyBox } = usePortfolioMode();
   const siteMode = mode === "site";
   const levelRef = useRef(null);
   const [playerPosition, setPlayerPosition] = useState({ center: 96, depth: 0, width: 0 });
@@ -33,7 +33,7 @@ function Home() {
       navigate(box.route);
       return;
     }
-    setDestroyedBoxes((current) => [...current, box.id]);
+    destroyBox(box.id);
   };
 
   return (

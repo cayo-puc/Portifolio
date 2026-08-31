@@ -14,17 +14,27 @@ import FloatingSettings from "./components/FloatingSettings";
 
 import "./App.css";
 
+const BROKEN_BOXES_STORAGE_KEY = "caio-exe-broken-boxes";
+
+const loadBrokenBoxes = () => {
+  try {
+    const storedBoxes = window.sessionStorage.getItem(BROKEN_BOXES_STORAGE_KEY);
+    return storedBoxes ? JSON.parse(storedBoxes) : [];
+  } catch {
+    return [];
+  }
+};
+
 function App() {
   const [mode, setMode] = useState(null);
   const [gamePhase, setGamePhase] = useState("idle");
-  const [destroyedBoxes, setDestroyedBoxes] = useState([]);
+  const [destroyedBoxes, setDestroyedBoxes] = useState(loadBrokenBoxes);
   const [foundDocuments, setFoundDocuments] = useState([]);
-  const [enemyProgress, setEnemyProgress] = useState({});
 
   const startGame = () => {
     setDestroyedBoxes([]);
+    window.sessionStorage.removeItem(BROKEN_BOXES_STORAGE_KEY);
     setFoundDocuments([]);
-    setEnemyProgress({});
     setGamePhase("instructions");
     setMode("game");
   };
@@ -38,10 +48,15 @@ function App() {
     setFoundDocuments(nextDocuments);
     if (nextDocuments.length === 4) setGamePhase("won");
   };
-  const saveEnemyProgress = (levelId, enemies) => setEnemyProgress((current) => ({ ...current, [levelId]: enemies }));
+  const destroyBox = (boxId) => setDestroyedBoxes((current) => {
+    if (current.includes(boxId)) return current;
+    const nextBoxes = [...current, boxId];
+    window.sessionStorage.setItem(BROKEN_BOXES_STORAGE_KEY, JSON.stringify(nextBoxes));
+    return nextBoxes;
+  });
   const endGame = (result) => setGamePhase(result);
   return (
-    <PortfolioModeContext.Provider value={{ mode, setMode, gamePhase, setGamePhase, destroyedBoxes, setDestroyedBoxes, foundDocuments, collectDocument, enemyProgress, saveEnemyProgress, startGame, startSite, endGame }}>
+    <PortfolioModeContext.Provider value={{ mode, setMode, gamePhase, setGamePhase, destroyedBoxes, destroyBox, foundDocuments, collectDocument, startGame, startSite, endGame }}>
       {mode === null ? <><Start /><FloatingSettings /></> : gamePhase === "instructions" ? <><Instructions /><FloatingSettings /></> : ["won", "lost"].includes(gamePhase) ? <><GameEnd result={gamePhase} /><FloatingSettings /></> : (
         <BrowserRouter>
           <FloatingSettings />
