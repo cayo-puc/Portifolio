@@ -33,7 +33,7 @@ Antes do desenvolvimento da aplicação, foram criados wireframes para definir a
 
 ### Contato
 
-![Wireframe da página de contato](public/images/pages/contatos.png)
+![Wireframe da página de contato](public/images/pages/contato.png)
 
 ---
 
