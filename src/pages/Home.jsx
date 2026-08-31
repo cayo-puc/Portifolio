@@ -13,16 +13,18 @@ const boxes = [
 
 function Home() {
   const navigate = useNavigate();
-  const { mode, destroyedBoxes, destroyBox } = usePortfolioMode();
+  const { mode, language, destroyedBoxes, destroyBox } = usePortfolioMode();
+  const english = language === "en";
+  const translatedBoxes = boxes.map((box) => ({ ...box, name: english ? ({ about: "About me", projects: "Projects", experiences: "Experience", contact: "Contact" })[box.id] : box.name }));
   const siteMode = mode === "site";
   const levelRef = useRef(null);
   const [playerPosition, setPlayerPosition] = useState({ center: 96, depth: 0, width: 0 });
-  const target = boxes
+  const target = translatedBoxes
     .map((box) => ({ ...box, distance: Math.abs(playerPosition.center - (playerPosition.width * box.position) / 100), depthDistance: Math.abs(playerPosition.depth - box.depth) }))
     .sort((a, b) => a.distance - b.distance)[0];
   const nearby = target?.distance <= HIT_DISTANCE && target.depthDistance <= 75 ? target : null;
 
-  const findNearbyBox = (position) => boxes
+  const findNearbyBox = (position) => translatedBoxes
     .map((box) => ({ ...box, distance: Math.abs(position.center - (position.width * box.position) / 100), depthDistance: Math.abs(position.depth - box.depth) }))
     .sort((a, b) => a.distance - b.distance)[0];
 
@@ -39,12 +41,12 @@ function Home() {
   return (
     <div className="page home-bg">
       <main className={`home-level ${siteMode ? "site-mode" : ""}`} ref={levelRef} aria-label="Level inicial interativo">
-        {boxes.map((box) => {
+        {translatedBoxes.map((box) => {
           const isBroken = !siteMode && destroyedBoxes.includes(box.id);
           return (
             <div className="level-box" key={box.id} style={{ left: `${box.position}%`, bottom: `calc(9% + ${box.depth}px)`, zIndex: 20 - Math.round(box.depth / 20), transform: `translateX(-50%) scale(${1 + -box.depth / 1200})` }} onClick={siteMode ? () => navigate(box.route) : undefined} role={siteMode ? "link" : undefined} tabIndex={siteMode ? 0 : undefined}>
               <img className="level-box-sprite" src={isBroken ? "/images/objects/box-broken.png" : box.image} alt={isBroken ? `Passagem para ${box.name}` : box.name} />
-              {(siteMode || nearby?.id === box.id) && <span className="box-interaction">{siteMode ? "CLIQUE PARA ABRIR" : isBroken ? "[ E ] ENTRAR" : "[ E / G ] BATER"}</span>}
+              {(siteMode || nearby?.id === box.id) && <span className="box-interaction">{siteMode ? (english ? "CLICK TO OPEN" : "CLIQUE PARA ABRIR") : isBroken ? (english ? "[ E ] ENTER" : "[ E ] ENTRAR") : (english ? "[ E / G ] HIT" : "[ E / G ] BATER")}</span>}
             </div>
           );
         })}

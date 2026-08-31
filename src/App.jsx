@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 
 import Home from "./pages/Home";
@@ -32,6 +32,18 @@ function App() {
   const [gamePhase, setGamePhase] = useState("idle");
   const [destroyedBoxes, setDestroyedBoxes] = useState(loadBrokenBoxes);
   const [foundDocuments, setFoundDocuments] = useState([]);
+  const [language, setLanguage] = useState(() => window.localStorage.getItem("portfolio-language") || "pt");
+
+  useEffect(() => {
+    document.documentElement.lang = language === "pt" ? "pt-BR" : "en";
+  }, [language]);
+
+  const toggleLanguage = () => setLanguage((current) => {
+    const next = current === "pt" ? "en" : "pt";
+    window.localStorage.setItem("portfolio-language", next);
+    document.documentElement.lang = next === "pt" ? "pt-BR" : "en";
+    return next;
+  });
 
   const startGame = () => {
     setDestroyedBoxes([]);
@@ -58,7 +70,7 @@ function App() {
   });
   const endGame = (result) => setGamePhase(result);
   return (
-    <PortfolioModeContext.Provider value={{ mode, setMode, gamePhase, setGamePhase, destroyedBoxes, destroyBox, foundDocuments, collectDocument, startGame, startSite, endGame }}>
+    <PortfolioModeContext.Provider value={{ mode, setMode, language, toggleLanguage, gamePhase, setGamePhase, destroyedBoxes, destroyBox, foundDocuments, collectDocument, startGame, startSite, endGame }}>
       {resumePage ? (
         <BrowserRouter><Routes><Route path="/curriculo" element={<Resume />} /></Routes></BrowserRouter>
       ) : mode === null ? <><Start /><FloatingSettings /></> : gamePhase === "instructions" ? <><Instructions /><FloatingSettings /></> : ["won", "lost"].includes(gamePhase) ? <><GameEnd result={gamePhase} /><FloatingSettings /></> : (
