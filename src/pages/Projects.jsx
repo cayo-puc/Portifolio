@@ -9,49 +9,34 @@ const projects = {
   nutrisoft: {
     name: "NutriSoft",
     github: githubProfile,
-    about: {
-      objective: "Apoiar o acompanhamento nutricional e a gestão de pacientes em uma solução desenvolvida como Trabalho Interdisciplinar de Engenharia de Software.",
-      features: "Organização das informações usadas no acompanhamento nutricional e na gestão de pacientes.",
-      participation: "Participei do desenvolvimento do projeto em equipe durante a graduação na PUC Minas.",
-    },
-    technologies: [
-      { name: "Java", use: "Base da lógica e das funcionalidades da aplicação." },
-      { name: "Spring Boot", use: "Estruturação da aplicação e integração de suas camadas." },
-      { name: "MySQL", use: "Armazenamento e organização dos dados do sistema." },
-      { name: "Thymeleaf", use: "Construção das páginas integradas à aplicação Java." },
-    ],
+    subtitle: "Sistema de acompanhamento nutricional",
+    description: "O NutriSoft é uma aplicação web desenvolvida para auxiliar profissionais de nutrição no gerenciamento e acompanhamento de seus pacientes, centralizando informações importantes para o atendimento em uma única plataforma.",
+    participationTitle: "Minha participação",
+    participation: "Atuei principalmente no desenvolvimento do módulo de formulários dinâmicos, na construção de grande parte das interfaces e na implementação do assistente virtual, além da integração dessas funcionalidades com o restante da aplicação.",
+    highlightsTitle: "Destaques",
+    highlights: ["Gerenciamento e acompanhamento de pacientes", "Formulários dinâmicos", "Interface voltada para profissionais de nutrição", "Assistente virtual", "Persistência de dados"],
+    technologiesTitle: "Tecnologias",
+    technologies: ["Java", "Spring Boot", "Spring Data JPA", "Hibernate", "MySQL", "Thymeleaf", "HTML", "CSS", "JavaScript"],
   },
   vollmed: {
     name: "Voll.Med API",
-    github: githubProfile,
-    about: {
-      objective: "Construir uma API REST para apoiar a gestão de médicos de uma clínica.",
-      features: "Cadastro, listagem paginada, atualização e exclusão lógica de médicos, com validação dos dados recebidos.",
-      participation: "Desenvolvi a API e sua organização em DTOs, regras de validação, persistência e migrações do banco de dados.",
-    },
-    technologies: [
-      { name: "Java", use: "Implementação da API e de suas regras de negócio." },
-      { name: "Spring Boot", use: "Criação dos endpoints REST e organização da aplicação." },
-      { name: "JPA", use: "Mapeamento e persistência das entidades." },
-      { name: "MySQL", use: "Banco de dados relacional da aplicação." },
-      { name: "Flyway", use: "Versionamento das alterações do banco de dados." },
-      { name: "DTOs e validações", use: "Controle e validação dos dados de entrada e saída da API." },
-    ],
+    github: "https://github.com/cayo-puc/ApiVollMed",
+    subtitle: "API REST para gerenciamento de clínica médica",
+    description: "Projeto back-end desenvolvido para aplicar na prática a construção de uma API REST com Spring Boot. A aplicação disponibiliza endpoints para gerenciamento de médicos e pacientes, com operações de cadastro, consulta, atualização e exclusão lógica.",
+    highlightsTitle: "O que desenvolvi",
+    highlights: ["Estruturação de uma API seguindo o padrão REST", "Cadastro e gerenciamento de médicos", "Cadastro e gerenciamento de pacientes", "Validação dos dados recebidos", "Persistência em banco de dados", "Organização da aplicação em diferentes camadas"],
+    technologiesTitle: "Tecnologias",
+    technologies: ["Java", "Spring Boot", "Spring Data JPA", "Hibernate", "MySQL", "Flyway", "Maven", "Lombok"],
   },
   pipeline: {
     name: "Pipeline de Dados",
-    github: githubProfile,
-    about: {
-      objective: "Integrar dados provenientes de arquivos JSON e CSV em um fluxo único de tratamento.",
-      features: "Extração, padronização, transformação e geração de um arquivo CSV consolidado.",
-      participation: "Desenvolvi o fluxo ETL em Python, da leitura das fontes até a geração do resultado consolidado.",
-    },
-    technologies: [
-      { name: "Python", use: "Implementação das etapas de extração, transformação e geração do resultado." },
-      { name: "JSON", use: "Formato de uma das fontes de dados processadas." },
-      { name: "CSV", use: "Formato de entrada e do arquivo consolidado gerado ao final." },
-      { name: "ETL", use: "Organização do fluxo de extração, transformação e carga dos dados." },
-    ],
+    github: "https://github.com/cayo-puc/Pipeline_python",
+    subtitle: "Integração e transformação de dados com Python",
+    description: "Projeto desenvolvido para integrar dados provenientes de diferentes fontes e formatos. O pipeline realiza etapas de extração, transformação e integração, padronizando os dados antes da geração do arquivo final.",
+    highlightsTitle: "O que desenvolvi",
+    highlights: ["Leitura de dados em diferentes formatos", "Tratamento e transformação dos dados", "Padronização das informações", "Integração das diferentes fontes", "Geração de uma saída consolidada", "Organização do processamento em etapas"],
+    technologiesTitle: "Tecnologias e conceitos",
+    technologies: ["Python", "JSON", "CSV", "ETL", "POO"],
   },
 };
 
@@ -59,8 +44,7 @@ function ProjectActions({ projectId, onOpen }) {
   const project = projects[projectId];
   return (
     <div className="project-actions">
-      <button type="button" onClick={() => onOpen(projectId, "about")}>Sobre o Projeto</button>
-      <button type="button" onClick={() => onOpen(projectId, "technologies")}>Tecnologias</button>
+      <button type="button" onClick={() => onOpen(projectId)}>Ver mais</button>
       <a href={project.github} target="_blank" rel="noreferrer">GitHub</a>
     </div>
   );
@@ -69,7 +53,7 @@ function ProjectActions({ projectId, onOpen }) {
 function Projects() {
   const [open, setOpen] = useState(false);
   const [projectDetail, setProjectDetail] = useState(null);
-  const openProjectDetail = (projectId, view) => setProjectDetail({ projectId, view });
+  const openProjectDetail = (projectId) => setProjectDetail(projectId);
 
   return (
     <GameLevel
@@ -82,7 +66,7 @@ function Projects() {
       document={<InteractiveDocument image="/images/objects/newspaper.png" />}
       overlay={open && (
         <div className="document-overlay">
-          <article className="document portfolio-document projects-newspaper">
+          <article className={`document portfolio-document projects-newspaper${projectDetail ? " has-project-detail" : ""}`}>
             <button className="close-document" onClick={() => { setProjectDetail(null); setOpen(false); }}>X</button>
 
             <header className="newspaper-masthead">
@@ -118,6 +102,7 @@ function Projects() {
                 </section>
               </aside>
             </section>
+            <h1>OUTROS PROJETOS</h1>
 
             <section className="project-stories">
               <article className="project-story">
@@ -140,7 +125,7 @@ function Projects() {
             </section>
 
             <footer className="newspaper-footer"><span>Nº 01</span><span>PROJETOS</span><span>PUC MINAS</span></footer>
-            {projectDetail && <ProjectDetailsModal project={projects[projectDetail.projectId]} view={projectDetail.view} onClose={() => setProjectDetail(null)} />}
+            {projectDetail && <ProjectDetailsModal project={projects[projectDetail]} onClose={() => setProjectDetail(null)} />}
           </article>
         </div>
       )}

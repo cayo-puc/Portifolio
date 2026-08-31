@@ -9,6 +9,7 @@ import Contact from "./pages/Contact";
 import Start from "./pages/Start";
 import Instructions from "./pages/Instructions";
 import GameEnd from "./pages/GameEnd";
+import Resume from "./pages/Resume";
 import { PortfolioModeContext } from "./components/PortfolioMode";
 import FloatingSettings from "./components/FloatingSettings";
 
@@ -26,6 +27,7 @@ const loadBrokenBoxes = () => {
 };
 
 function App() {
+  const resumePage = window.location.pathname === "/curriculo";
   const [mode, setMode] = useState(null);
   const [gamePhase, setGamePhase] = useState("idle");
   const [destroyedBoxes, setDestroyedBoxes] = useState(loadBrokenBoxes);
@@ -57,7 +59,9 @@ function App() {
   const endGame = (result) => setGamePhase(result);
   return (
     <PortfolioModeContext.Provider value={{ mode, setMode, gamePhase, setGamePhase, destroyedBoxes, destroyBox, foundDocuments, collectDocument, startGame, startSite, endGame }}>
-      {mode === null ? <><Start /><FloatingSettings /></> : gamePhase === "instructions" ? <><Instructions /><FloatingSettings /></> : ["won", "lost"].includes(gamePhase) ? <><GameEnd result={gamePhase} /><FloatingSettings /></> : (
+      {resumePage ? (
+        <BrowserRouter><Routes><Route path="/curriculo" element={<Resume />} /></Routes></BrowserRouter>
+      ) : mode === null ? <><Start /><FloatingSettings /></> : gamePhase === "instructions" ? <><Instructions /><FloatingSettings /></> : ["won", "lost"].includes(gamePhase) ? <><GameEnd result={gamePhase} /><FloatingSettings /></> : (
         <BrowserRouter>
           <FloatingSettings />
           <Routes>
@@ -66,6 +70,7 @@ function App() {
             <Route path="/projetos" element={<Projects />} />
             <Route path="/experiencias" element={<Experiences />} />
             <Route path="/contato" element={<Contact />} />
+            <Route path="/curriculo" element={<Resume />} />
           </Routes>
         </BrowserRouter>
       )}

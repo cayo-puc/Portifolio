@@ -1,6 +1,6 @@
 import { useEffect, useRef } from "react";
 
-function ProjectDetailsModal({ project, view, onClose }) {
+function ProjectDetailsModal({ project, onClose }) {
   const closeButtonRef = useRef(null);
 
   useEffect(() => {
@@ -12,8 +12,6 @@ function ProjectDetailsModal({ project, view, onClose }) {
     return () => window.removeEventListener("keydown", handleKeyDown);
   }, [onClose]);
 
-  const title = view === "technologies" ? "Tecnologias" : "Sobre o Projeto";
-
   return (
     <div className="project-modal-backdrop" onMouseDown={(event) => {
       if (event.target === event.currentTarget) onClose();
@@ -21,33 +19,30 @@ function ProjectDetailsModal({ project, view, onClose }) {
       <section className="project-detail-card" role="dialog" aria-modal="true" aria-labelledby="project-modal-title">
         <button ref={closeButtonRef} className="project-modal-close" type="button" onClick={onClose} aria-label="Fechar detalhes do projeto">×</button>
         <p className="project-modal-file">ARQUIVO COMPLEMENTAR // {project.name}</p>
-        <h2 id="project-modal-title">{title}</h2>
+        <h2 id="project-modal-title">{project.name}</h2>
+        <p className="project-detail-subtitle">{project.subtitle}</p>
+        <p className="project-detail-description">{project.description}</p>
 
-        {view === "about" ? (
-          <div className="project-about-grid">
-            <section>
-              <h3>Objetivo</h3>
-              <p>{project.about.objective}</p>
-            </section>
-            <section>
-              <h3>Principais funcionalidades</h3>
-              <p>{project.about.features}</p>
-            </section>
-            <section>
-              <h3>Minha participação</h3>
-              <p>{project.about.participation}</p>
-            </section>
-          </div>
-        ) : (
-          <ul className="project-technology-list">
-            {project.technologies.map((technology) => (
-              <li key={technology.name}>
-                <strong>{technology.name}</strong>
-                <span>{technology.use}</span>
-              </li>
-            ))}
-          </ul>
+        {project.participation && (
+          <section className="project-detail-section">
+            <h3>{project.participationTitle}</h3>
+            <p>{project.participation}</p>
+          </section>
         )}
+
+        <section className="project-detail-section">
+          <h3>{project.highlightsTitle}</h3>
+          <ul className="project-highlight-list">
+            {project.highlights.map((highlight) => <li key={highlight}>{highlight}</li>)}
+          </ul>
+        </section>
+
+        <section className="project-detail-section">
+          <h3>{project.technologiesTitle}</h3>
+          <div className="project-technology-tags">
+            {project.technologies.map((technology) => <span key={technology}>{technology}</span>)}
+          </div>
+        </section>
       </section>
     </div>
   );

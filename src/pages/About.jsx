@@ -35,7 +35,7 @@ function About() {
               <div className="about-sections">
                 <section className="about-section document-entry">
                   <p className="section-label">APRESENTAÇÃO PESSOAL</p>
-                  <h2>Ideias que ganham forma</h2>
+                  <h2>Quem sou eu?</h2>
                 <p>
                   Olá! Eu sou Caio Santos Borges, Engenheiro de Software e alguém que gosta de transformar ideias em coisas que posso criar, experimentar e compartilhar.
                 </p>
@@ -48,6 +48,11 @@ function About() {
                   <strong>PUC Minas • 2025 — 2028 (previsão)</strong>
                   <p>Curso Engenharia de Software na PUC Minas, construindo minha formação por meio de disciplinas e projetos práticos, individuais e em equipe.</p>
                 </section>
+
+                <figure className="beyond-code-photo">
+                  <img src="/images/pictures/caio-alem-do-codigo.png" alt="Caio em um ambiente com instrumentos musicais e desenhos" />
+                  <figcaption>ARQUIVO PESSOAL </figcaption>
+                </figure>
 
                 <section className="document-entry about-beyond-code">
                   <p className="section-label">ALÉM DO CÓDIGO</p>
