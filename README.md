@@ -21,19 +21,19 @@ Antes do desenvolvimento da aplicação, foram criados wireframes para definir a
 
 ### Home
 
-![Wireframe da página inicial](public/pages/home.png)
+![Wireframe da página inicial](public/images/pages/home.png)
 
 ### Experiências
 
-![Wireframe da página de experiências](public/pages/experiencias.png)
+![Wireframe da página de experiências](public/images/pages/experiencias.png)
 
 ### Projetos
 
-![Wireframe da página de projetos](public/pages/projetos.png)
+![Wireframe da página de projetos](public/images/pages/projetos.png)
 
 ### Contato
 
-![Wireframe da página de contato](public/pages/contatos.png)
+![Wireframe da página de contato](public/images/pages/contatos.png)
 
 ---
 
