@@ -9,4 +9,5 @@ body,
 
 body {
   background: #050509;
+  overscroll-behavior: none;
 }

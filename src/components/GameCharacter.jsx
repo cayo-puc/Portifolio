@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 
 const PLAYER_WIDTH = 160;
 const PLAYER_COLLISION_WIDTH = 118;
@@ -47,31 +47,33 @@ function GameCharacter({ levelRef, onInteract, onAttack, onPositionChange, onLan
     });
   }, []);
 
+  const performAction = useCallback((key) => {
+    const data = playerRef.current;
+    if (key === " " && (data.y === 0 || data.y === BOX_TOP) && performance.now() >= data.attackingUntil) {
+      data.velocityY = JUMP_SPEED;
+      return;
+    }
+    if (key !== "e" && key !== "g") return;
+    const isAttack = key === "g" || attackOnE;
+    if (isAttack) data.attackingUntil = performance.now() + 420;
+    const position = {
+      center: data.x + PLAYER_WIDTH / 2,
+      depth: data.depth,
+      width: levelRef.current?.clientWidth ?? 0,
+      facing: data.facing,
+      blockedObstacleId: data.blockedObstacleId,
+    };
+    if (isAttack) callbackRef.current.onAttack?.(position);
+    if (key === "e" || allowGInteraction) callbackRef.current.onInteract?.(position);
+  }, [allowGInteraction, attackOnE, levelRef]);
+
   useEffect(() => {
     const handleKeyDown = (event) => {
       const key = event.key.toLowerCase();
       if (["arrowleft", "arrowright", "arrowup", " "].includes(key)) event.preventDefault();
       keysRef.current.add(key);
       if (event.repeat) return;
-      if (key === " " && (playerRef.current.y === 0 || playerRef.current.y === BOX_TOP) && performance.now() >= playerRef.current.attackingUntil) {
-        playerRef.current.velocityY = JUMP_SPEED;
-      }
-      if (key === "e" || key === "g") {
-        const isAttack = key === "g" || attackOnE;
-        if (isAttack) playerRef.current.attackingUntil = performance.now() + 420;
-        const width = levelRef.current?.clientWidth ?? 0;
-        const position = {
-          center: playerRef.current.x + PLAYER_WIDTH / 2,
-          depth: playerRef.current.depth,
-          width,
-          facing: playerRef.current.facing,
-          blockedObstacleId: playerRef.current.blockedObstacleId,
-        };
-        if (isAttack) callbackRef.current.onAttack?.(position);
-        if (key === "e" || allowGInteraction) {
-          callbackRef.current.onInteract?.(position);
-        }
-      }
+      performAction(key);
     };
     const handleKeyUp = (event) => keysRef.current.delete(event.key.toLowerCase());
     window.addEventListener("keydown", handleKeyDown);
@@ -80,7 +82,7 @@ function GameCharacter({ levelRef, onInteract, onAttack, onPositionChange, onLan
       window.removeEventListener("keydown", handleKeyDown);
       window.removeEventListener("keyup", handleKeyUp);
     };
-  }, [allowGInteraction, attackOnE, levelRef]);
+  }, [performAction]);
 
   useEffect(() => {
     let animationFrame;
@@ -165,7 +167,17 @@ function GameCharacter({ levelRef, onInteract, onAttack, onPositionChange, onLan
   }, [hurtDirection, hurtUntil, levelRef]);
 
   const state = player.hurt ? "hurt" : player.attacking ? "attacking" : player.airborne ? "jumping" : player.moving ? "running" : "standing";
-  return (
+  const pressDirection = (key) => (event) => {
+    event.preventDefault();
+    keysRef.current.add(key);
+    event.currentTarget.setPointerCapture?.(event.pointerId);
+  };
+  const releaseDirection = (key) => (event) => {
+    event.preventDefault();
+    keysRef.current.delete(key);
+  };
+
+  return <>
     <div
       className={`player-character player-character--${state}`}
       aria-label="Personagem controlável"
@@ -178,7 +190,19 @@ function GameCharacter({ levelRef, onInteract, onAttack, onPositionChange, onLan
       {state === "attacking" && <><img className="character-attacking character-frame-one" src={spriteSources[5]} alt="" /><img className="character-attacking character-frame-two" src={spriteSources[6]} alt="" /></>}
       {state === "hurt" && <img className="character-hurt" src={spriteSources[7]} alt="" />}
     </div>
-  );
+    <div className="mobile-game-controls" aria-label="Controles do jogo">
+      <div className="mobile-dpad">
+        {[["w", "↑", "up"], ["a", "←", "left"], ["s", "↓", "down"], ["d", "→", "right"]].map(([key, label, position]) => (
+          <button key={key} className={`mobile-control mobile-control--${position}`} aria-label={position} onPointerDown={pressDirection(key)} onPointerUp={releaseDirection(key)} onPointerCancel={releaseDirection(key)} onPointerLeave={releaseDirection(key)}>{label}</button>
+        ))}
+      </div>
+      <div className="mobile-actions">
+        <button className="mobile-control mobile-action mobile-action--jump" onPointerDown={(event) => { event.preventDefault(); performAction(" "); }}>PULAR</button>
+        <button className="mobile-control mobile-action" onPointerDown={(event) => { event.preventDefault(); performAction("e"); }}>USAR</button>
+        {!attackOnE && <button className="mobile-control mobile-action mobile-action--attack" onPointerDown={(event) => { event.preventDefault(); performAction("g"); }}>ATACAR</button>}
+      </div>
+    </div>
+  </>;
 }
 
 export default GameCharacter;

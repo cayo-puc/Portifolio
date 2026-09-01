@@ -12,6 +12,7 @@ import GameEnd from "./pages/GameEnd";
 import Resume from "./pages/Resume";
 import { PortfolioModeContext } from "./components/PortfolioMode";
 import FloatingSettings from "./components/FloatingSettings";
+import LandscapeGuard from "./components/LandscapeGuard";
 
 import "./App.css";
 
@@ -71,6 +72,7 @@ function App() {
   const endGame = (result) => setGamePhase(result);
   return (
     <PortfolioModeContext.Provider value={{ mode, setMode, language, toggleLanguage, gamePhase, setGamePhase, destroyedBoxes, destroyBox, foundDocuments, collectDocument, startGame, startSite, endGame }}>
+      <LandscapeGuard />
       {resumePage ? (
         <BrowserRouter><Routes><Route path="/curriculo" element={<Resume />} /></Routes></BrowserRouter>
       ) : mode === null ? <><Start /><FloatingSettings /></> : gamePhase === "instructions" ? <><Instructions /><FloatingSettings /></> : ["won", "lost"].includes(gamePhase) ? <><GameEnd result={gamePhase} /><FloatingSettings /></> : (
