@@ -44,7 +44,7 @@ function Contact() {
         <div className="document-overlay">
           <article className="document portfolio-document contact-newspaper">
             <button className="close-document" onClick={() => setOpen(false)}>X</button>
-            <JournalHeader section="CONTATO • CONEXÕES • OPORTUNIDADES" archive="CONTATO" />
+            <JournalHeader  archive="CONTATO" />
             <p className="document-code">CANAL DE COMUNICAÇÃO</p>
             <h1>CONTATO</h1>
             <p>Estou aberto a oportunidades de estágio, projetos e novas conexões profissionais. Se quiser conversar sobre desenvolvimento, tecnologia ou algum dos meus projetos, fique à vontade para entrar em contato.</p>

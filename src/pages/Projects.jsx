@@ -72,13 +72,13 @@ function Projects() {
             <header className="newspaper-masthead">
               <div>
                 <p className="newspaper-brand">BREAKING NEWS</p>
-                <p className="newspaper-section">SOFTWARE • PROJETOS • TECNOLOGIA</p>
+          
               </div>
               <div className="newspaper-mark">&gt;_</div>
             </header>
-            <div className="newspaper-meta"><span>EDIÇÃO 2026</span><span>ARQUIVO // PROJETOS</span><span>BELO HORIZONTE, MG</span></div>
+            
             <h1>PROJETOS EM DESTAQUE</h1>
-            <p className="newspaper-lead">Seleção de projetos desenvolvidos durante minha graduação e meus estudos.</p>
+            
 
             <section className="featured-project">
               <article className="featured-story">
@@ -124,7 +124,7 @@ function Projects() {
               </article>
             </section>
 
-            <footer className="newspaper-footer"><span>Nº 01</span><span>PROJETOS</span><span>PUC MINAS</span></footer>
+            
             {projectDetail && <ProjectDetailsModal project={projects[projectDetail]} onClose={() => setProjectDetail(null)} />}
           </article>
         </div>

@@ -28,7 +28,7 @@ function About() {
                 X
               </button>
 
-              <JournalHeader section="PERFIL • TRAJETÓRIA • CRIATIVIDADE" archive="SOBRE MIM" />
+              <JournalHeader archive="SOBRE MIM" />
               <p className="document-code">PERFIL RECUPERADO // CAIO SANTOS BORGES</p>
               <h1>SOBRE MIM</h1>
 
@@ -51,7 +51,7 @@ function About() {
 
                 <figure className="beyond-code-photo">
                   <img src="/images/pictures/caio-alem-do-codigo.png" alt="Caio em um ambiente com instrumentos musicais e desenhos" />
-                  <figcaption>ARQUIVO PESSOAL </figcaption>
+            
                 </figure>
 
                 <section className="document-entry about-beyond-code">

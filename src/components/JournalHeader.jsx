@@ -8,7 +8,7 @@ function JournalHeader({ section, archive }) {
         </div>
         <div className="newspaper-mark">&gt;_</div>
       </header>
-      <div className="newspaper-meta newspaper-meta--compact"><span>EDIÇÃO 2026</span><span>ARQUIVO // {archive}</span><span>BELO HORIZONTE, MG</span></div>
+      
     </>
   );
 }

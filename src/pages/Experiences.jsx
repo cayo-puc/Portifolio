@@ -19,7 +19,7 @@ function Experiences() {
         <div className="document-overlay">
           <article className="document portfolio-document experiences-newspaper">
             <button className="close-document" onClick={() => setOpen(false)}>X</button>
-            <JournalHeader section="CARREIRA • PRÁTICA • APRENDIZADO" archive="EXPERIÊNCIAS" />
+            <JournalHeader archive="EXPERIÊNCIAS" />
             <p className="document-code">REGISTRO RECUPERADO // EXPERIÊNCIAS</p>
             <h1>EXPERIÊNCIAS</h1>
             <section className="document-entry">
