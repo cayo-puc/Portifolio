@@ -2,6 +2,7 @@ import { useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import GameCharacter from "../components/GameCharacter";
 import { usePortfolioMode } from "../components/PortfolioMode";
+import { sceneDepth } from "../components/mobileLayout";
 
 const HIT_DISTANCE = 195;
 const boxes = [
@@ -44,7 +45,7 @@ function Home() {
         {translatedBoxes.map((box) => {
           const isBroken = !siteMode && destroyedBoxes.includes(box.id);
           return (
-            <div className="level-box" key={box.id} style={{ left: `${box.position}%`, bottom: `calc(9% + ${box.depth}px)`, zIndex: 20 - Math.round(box.depth / 20), transform: `translateX(-50%) scale(${1 + -box.depth / 1200})` }} onClick={siteMode ? () => navigate(box.route) : undefined} role={siteMode ? "link" : undefined} tabIndex={siteMode ? 0 : undefined}>
+            <div className="level-box" key={box.id} style={{ left: `${box.position}%`, bottom: `calc(9% + ${sceneDepth(box.depth)}px)`, zIndex: 20 - Math.round(box.depth / 20), transform: `translateX(-50%) scale(${1 + -sceneDepth(box.depth) / 1200})` }} onClick={siteMode ? () => navigate(box.route) : undefined} role={siteMode ? "link" : undefined} tabIndex={siteMode ? 0 : undefined}>
               <img className="level-box-sprite" src={isBroken ? "/images/objects/box-broken.png" : box.image} alt={isBroken ? `Passagem para ${box.name}` : box.name} />
               {(siteMode || nearby?.id === box.id) && <span className="box-interaction">{siteMode ? (english ? "CLICK TO OPEN" : "CLIQUE PARA ABRIR") : isBroken ? (english ? "[ E ] ENTER" : "[ E ] ENTRAR") : (english ? "[ E / G ] HIT" : "[ E / G ] BATER")}</span>}
             </div>

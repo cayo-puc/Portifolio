@@ -2,6 +2,7 @@ import { cloneElement, useEffect, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import GameCharacter from "./GameCharacter";
 import { usePortfolioMode } from "./PortfolioMode";
+import { sceneDepth } from "./mobileLayout";
 
 const INTERACTION_DISTANCE = 195;
 const RETURN_INTERACTION_DISTANCE = 280;
@@ -178,25 +179,25 @@ function GameLevel({ backgroundClass, documentPosition, returnPosition, onDocume
       <main className={`game-content playable-level ${siteMode ? "site-mode" : ""}`} ref={levelRef} aria-label="Level interativo">
         {!siteMode && <div className="combat-hearts" aria-label={`Vidas: ${lives} de 3`}>{"♥".repeat(lives)}{"♡".repeat(3 - lives)}</div>}
 
-        <div className={`scene-document ${enemiesDefeated || siteMode ? "is-unlocked" : "is-locked"}`} style={{ left: `${documentPosition.left}%`, bottom: `calc(${documentPosition.bottom}% + ${documentPosition.depth}px)`, zIndex: 20 - Math.round(documentPosition.depth / 20), transform: `translateX(-50%) scale(${1 + -documentPosition.depth / 1200})` }}>
+        <div className={`scene-document ${enemiesDefeated || siteMode ? "is-unlocked" : "is-locked"}`} style={{ left: `${documentPosition.left}%`, bottom: `calc(${documentPosition.bottom}% + ${sceneDepth(documentPosition.depth)}px)`, zIndex: 20 - Math.round(documentPosition.depth / 20), transform: `translateX(-50%) scale(${1 + -sceneDepth(documentPosition.depth) / 1200})` }}>
           {cloneElement(document, { onInteract: siteMode ? onDocumentInteract : undefined })}
           {(siteMode || canRead) && <span className="scene-prompt">{siteMode ? "CLIQUE PARA LER" : "[ E ] LER DOCUMENTO"}</span>}
           {!siteMode && !enemiesDefeated && <span className="scene-prompt scene-prompt--locked">DOCUMENTO BLOQUEADO</span>}
         </div>
 
-        <div className="return-gate" aria-label="Passagem de volta" style={{ left: `${returnPosition.left}%`, bottom: `calc(9% + ${returnPosition.depth}px)`, zIndex: 20 - Math.round(returnPosition.depth / 20), transform: `translateX(-50%) scale(${1 + -returnPosition.depth / 1200})` }} onClick={siteMode ? () => navigate("/") : undefined}>
+        <div className="return-gate" aria-label="Passagem de volta" style={{ left: `${returnPosition.left}%`, bottom: `calc(9% + ${sceneDepth(returnPosition.depth)}px)`, zIndex: 20 - Math.round(returnPosition.depth / 20), transform: `translateX(-50%) scale(${1 + -sceneDepth(returnPosition.depth) / 1200})` }} onClick={siteMode ? () => navigate("/") : undefined}>
           <img src="/images/objects/box-broken.png" alt="Passagem de volta para a Home" />
           {(siteMode || canReturn) && <span className="scene-prompt">{siteMode ? "CLIQUE PARA HOME" : "[ E ] VOLTAR À HOME"}</span>}
         </div>
 
         {!siteMode && enemies.map((enemy) => (
-          <div className={`enemy-rat${enemy.moving ? " is-moving" : ""}${enemy.attacking ? " is-attacking" : ""}${enemy.hurt ? " is-hurt" : ""}`} key={enemy.id} style={{ left: `${enemy.x}%`, bottom: `calc(10% + ${enemy.depth}px)`, zIndex: 20 - Math.round(enemy.depth / 20), transform: `translateX(-50%) scaleX(${-(enemy.facing ?? -1)}) scale(${1 + -enemy.depth / 1200})` }}>
+          <div className={`enemy-rat${enemy.moving ? " is-moving" : ""}${enemy.attacking ? " is-attacking" : ""}${enemy.hurt ? " is-hurt" : ""}`} key={enemy.id} style={{ left: `${enemy.x}%`, bottom: `calc(10% + ${sceneDepth(enemy.depth)}px)`, zIndex: 20 - Math.round(enemy.depth / 20), transform: `translateX(-50%) scaleX(${-(enemy.facing ?? -1)}) scale(${1 + -sceneDepth(enemy.depth) / 1200})` }}>
             {enemy.hurt ? <img className="enemy-hurt" src="/images/enemies/rat-hurt.png" alt="Rato ferido" /> : enemy.attacking ? <img className="enemy-attacking" src="/images/enemies/rat-attack-1.png" alt="Rato preparando ataque" /> : enemy.moving ? <><img className="enemy-running enemy-frame-two" src="/images/enemies/rat-running-2.png" alt="Rato correndo" /><img className="enemy-running enemy-frame-three" src="/images/enemies/rat-runing-3.png" alt="" /><img className="enemy-running enemy-frame-one" src="/images/enemies/rat-running-1.png" alt="" /></> : <img className="enemy-standing" src="/images/enemies/rat-standing.png" alt="Rato inimigo" />}
           </div>
         ))}
 
         {!siteMode && projectiles.map((projectile) => (
-          <div className="purple-projectile" key={projectile.id} aria-label="Projétil inimigo" style={{ left: `${projectile.x}%`, bottom: `calc(10% + ${projectile.depth}px)`, transform: `translateX(-50%) scaleX(${projectile.direction})` }}>
+          <div className="purple-projectile" key={projectile.id} aria-label="Projétil inimigo" style={{ left: `${projectile.x}%`, bottom: `calc(10% + ${sceneDepth(projectile.depth)}px)`, transform: `translateX(-50%) scaleX(${projectile.direction})` }}>
             <img className="projectile-frame-one" src="/images/objects/purpleball-1.png" alt="" />
             <img className="projectile-frame-two" src="/images/objects/purpleball-2.png" alt="" />
           </div>
