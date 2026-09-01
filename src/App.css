@@ -3281,11 +3281,11 @@ textarea {
 
   .home-level .level-box,
   .playable-level .return-gate {
-    width: 100px;
+    width: 160px;
   }
 
   .playable-level .enemy-rat {
-    width: 100px;
+    width: 80px;
     height: 106px;
   }
 }
