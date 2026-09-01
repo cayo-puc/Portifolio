@@ -3270,3 +3270,17 @@ textarea {
     padding-right: 30px;
   }
 }
+
+/* Mantido no fim da cascata para não ser sobrescrito pelos componentes desktop. */
+@media (hover: none) and (pointer: coarse) and (orientation: landscape) and (max-height: 520px) {
+  .playable-level .player-character,
+  .home-level .player-character {
+    width: 82px;
+    height: 126px;
+  }
+
+  .home-level .level-box,
+  .playable-level .return-gate {
+    width: clamp(88px, 13vw, 125px);
+  }
+}
