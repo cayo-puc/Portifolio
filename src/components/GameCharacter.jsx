@@ -27,10 +27,10 @@ const getMovementMetrics = () => {
   };
 
   return {
-    playerWidth: 82,
-    playerCollisionWidth: 60,
-    boxCollisionWidth: 92,
-    boxTop: 45,
+    playerWidth: 72,
+    playerCollisionWidth: 53,
+    boxCollisionWidth: 80,
+    boxTop: 40,
     minDepth: MIN_DEPTH,
     maxDepth: MAX_DEPTH,
     depthSpeed: 190,

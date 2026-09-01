@@ -3275,12 +3275,17 @@ textarea {
 @media (hover: none) and (pointer: coarse) and (orientation: landscape) and (max-height: 520px) {
   .playable-level .player-character,
   .home-level .player-character {
-    width: 82px;
-    height: 126px;
+    width: 72px;
+    height: 110px;
   }
 
   .home-level .level-box,
   .playable-level .return-gate {
-    width: clamp(88px, 13vw, 125px);
+    width: clamp(76px, 11vw, 105px);
+  }
+
+  .playable-level .enemy-rat {
+    width: 100px;
+    height: 106px;
   }
 }
