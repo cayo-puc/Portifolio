@@ -572,6 +572,10 @@ textarea {
   height: 150px;
 }
 
+.project-story .project-image--pipeline {
+  object-fit: contain;
+}
+
 .project-story:first-child img {
   object-position: top;
 }
@@ -651,6 +655,13 @@ textarea {
   .project-story img {
     height: auto;
     max-height: 220px;
+  }
+
+  .project-story .project-image--vollmed,
+  .project-story .project-image--pipeline {
+    width: 100%;
+    max-height: none;
+    object-fit: contain;
   }
 
   .story-footer {

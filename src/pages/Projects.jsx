@@ -108,7 +108,7 @@ function Projects() {
               <article className="project-story">
                 <h2>VOLL.MED API</h2>
                 <p className="project-kicker">API REST PARA GESTÃO DE CLÍNICA</p>
-                <img src="/images/pictures/vollMed.png" alt="Endpoints da Voll.med API" />
+                <img className="project-image project-image--vollmed" src="/images/pictures/vollMed.png" alt="Endpoints da Voll.med API" />
                 <p>API em Java e Spring Boot para cadastro, listagem paginada, atualização e exclusão lógica de médicos, com DTOs, validações, JPA, MySQL e Flyway.</p>
                 <div className="story-footer"><span>JAVA • SPRING BOOT • JPA • MYSQL</span></div>
                 <ProjectActions projectId="vollmed" onOpen={openProjectDetail} />
@@ -117,7 +117,7 @@ function Projects() {
               <article className="project-story">
                 <h2>PIPELINE DE DADOS</h2>
                 <p className="project-kicker">INTEGRAÇÃO E TRATAMENTO DE DADOS</p>
-                <img src="/images/pictures/pipeline.png" alt="Fluxo do pipeline de integração de dados" />
+                <img className="project-image project-image--pipeline" src="/images/pictures/pipeline.png" alt="Fluxo do pipeline de integração de dados" />
                 <p>Pipeline ETL em Python para extração de dados JSON e CSV, padronização, transformação e geração de um arquivo CSV consolidado.</p>
                 <div className="story-footer"><span>PYTHON • JSON • CSV • ETL</span></div>
                 <ProjectActions projectId="pipeline" onOpen={openProjectDetail} />

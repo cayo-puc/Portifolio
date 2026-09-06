@@ -55,7 +55,7 @@ function Contact() {
                 <a className="contact-channel" href="https://linkedin.com/in/caio-santos-borges-792591362/" target="_blank" rel="noreferrer"><span aria-hidden="true">in</span><span><strong>LinkedIn</strong><small>Caio Santos Borges</small></span></a>
                 <a className="contact-channel" href="https://github.com/cayo-puc" target="_blank" rel="noreferrer"><span aria-hidden="true">&lt;/&gt;</span><span><strong>GitHub</strong><small>@cayo-puc</small></span></a>
                 <div className="contact-location"><strong>Localização</strong><span>Belo Horizonte — MG, Brasil</span></div>
-                <a className="resume-button" href="/curriculo" target="_blank" rel="noreferrer"><span aria-hidden="true">▣</span> ABRIR CURRÍCULO</a>
+                <a className="resume-button" href={`${import.meta.env.BASE_URL}documents/curriculo-caio-santos.pdf`} target="_blank" rel="noreferrer"><span aria-hidden="true">▣</span> ABRIR CURRÍCULO</a>
               </div>
 
               <form className="contact-form newspaper-contact-form" onSubmit={sendMessage}>
