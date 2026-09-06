@@ -3,12 +3,10 @@ import GameLevel from "../components/GameLevel";
 import InteractiveDocument from "../components/InteractivePaper";
 import ProjectDetailsModal from "../components/ProjectDetailsModal";
 
-const githubProfile = "https://github.com/cayo-puc";
-
 const projects = {
   nutrisoft: {
     name: "NutriSoft",
-    github: githubProfile,
+    github: "https://github.com/ICEI-PUC-Minas-PPLES-TI/plf-es-2026-1-ti3-5533100-g6-nutri-soft",
     subtitle: "Sistema de acompanhamento nutricional",
     description: "O NutriSoft é uma aplicação web desenvolvida para auxiliar profissionais de nutrição no gerenciamento e acompanhamento de seus pacientes, centralizando informações importantes para o atendimento em uma única plataforma.",
     participationTitle: "Minha participação",
