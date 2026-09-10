@@ -10,7 +10,7 @@ O objetivo foi unir desenvolvimento web, criatividade e elementos de jogos para 
 
 ## Acesse o projeto
 
-🔗 **Site publicado:** [Acessar Portfólio](https://portifolio-ka6b.onrender.com)
+🔗 **Site publicado:** [Acessar Portfólio](https://portifolio-mvxi.onrender.com)
 
 
 ---
